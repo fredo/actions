@@ -2,6 +2,12 @@ name: Publish NPM Package
 
 on:
   workflow_call:
+    inputs:
+      artifact_name:
+        description: "Name of the artifact to download (optional)"
+        required: false
+        type: string
+        default: ""
     secrets:
       NPM_TOKEN:
         description: "NPM authentication token"
@@ -35,6 +41,13 @@ jobs:
             echo "Error: Tag version ($TAG_VERSION) does not match package.json version ($PACKAGE_VERSION)"
             exit 1
           fi
+
+      - name: Download artifact
+        if: ${{ inputs.artifact_name != '' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: artifacts/
 
       - name: Publish to NPM
         run: npm publish --access public
