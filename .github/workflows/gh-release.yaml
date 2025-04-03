@@ -31,6 +31,10 @@ on:
         required: false
         type: string
         default: ""
+    secrets:
+      SSH_PRIVATE_KEY:
+        description: "SSH private key"
+        required: true
 
 jobs:
   create-release:

@@ -2,6 +2,10 @@ name: Publish NPM Package
 
 on:
   workflow_call:
+    secrets:
+      NPM_TOKEN:
+        description: "NPM authentication token"
+        required: true
 
 jobs:
   publish:
@@ -12,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "18"
           registry-url: "https://registry.npmjs.org"
 
       - name: Verify tag matches package.json version
